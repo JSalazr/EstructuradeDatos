@@ -18,6 +18,7 @@ char* arreglar(char arreglo[], int c){
                 if(arreglo[x]==arreglo[y]){
                     arreglo[y]=0;
                     desplazamiento(arreglo, y, c);
+
                 }
         }
     }

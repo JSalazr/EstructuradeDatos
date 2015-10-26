@@ -25,6 +25,29 @@ bool eliminar(int pos){
         return false;
 }
 
+bool insertar(int pos, int valor){
+    if(pos<cantAct && pos>=0 && cantAct<cant)
+        {
+            for(int cont = cantAct; cont > pos; cont--)
+                arreglo[cont]=arreglo[cont-1];
+            arreglo[pos]=valor;
+            cantAct++;
+            return true;
+        }
+    if(pos>cantAct)
+        return agregar(valor);
+
+    return false;
+}
+
+int buscar(int valor){
+    for(int cont=0; cont<cant; cant++){
+        if(arreglo[cont]==valor)
+            return cont;
+    }
+    return -1
+}
+
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
