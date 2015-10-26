@@ -45,16 +45,43 @@ int buscar(int valor){
         if(arreglo[cont]==valor)
             return cont;
     }
-    return -1
+    return -1;
+}
+
+void imprimir(){
+    for(int cont=0; cont<cant; cant++){
+        cout<<arreglo[cont]<<endl;
+    }
 }
 
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
-    int x;
-    cin>>x;
-    agregar(x);
-    cin>>x;
-    eliminar(x);
+    int opc;
+    int valor;
+    while(true){
+        cout<<"1-Agregar"<<endl;
+        cout<<"2-Buscar"<<endl;
+        cout<<"3-Eliminar"<<endl;
+        cout<<"4-Insertar"<<endl;
+        cin>>opc;
+        switch(opc){
+            case 1:
+                cin>>valor;
+                agregar(valor); break;
+            case 2:
+                cin>>valor;
+                cout<<buscar(valor)->valor<<endl; break;
+            case 3:
+                cin>>valor;
+                eliminar(valor); break;
+            case 4:
+                int pos;
+                cin>>valor;
+                cin>>pos;
+                insertar(pos, valor); break;
+            case 5:
+                imprimir(); break;
+   }
     return a.exec();
 }
