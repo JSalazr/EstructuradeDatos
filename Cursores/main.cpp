@@ -24,7 +24,7 @@ int nextList(){
     return -1;
 }
 
-int crear(char valor){
+void crear(char valor){
     if(cont<10){
         int nextDisp=listas[0];
         arreglo[nextDisp].valor=valor;
@@ -79,6 +79,11 @@ void insertar(char valor, int lista, char despuesDe){
 
 void eliminar(char valor, int lista){
     Nodo* temp=&arreglo[listas[lista]];
+    if(temp->valor==valor){
+        listas[0]=listas[lista];
+        listas[lista]=temp->next;
+        cont--;
+    }
     while(temp->next!=-1){
         if(arreglo[temp->next].valor==valor){
             listas[0]=temp->next;
