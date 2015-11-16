@@ -53,16 +53,18 @@ SOURCES       = ../Tetris1/main.cpp \
 		../Tetris1/game.cpp \
 		../Tetris1/arboles.cpp \
 		../Tetris1/nodo.cpp \
-		../Tetris1/rect2.cpp moc_rect1.cpp \
-		moc_rect2.cpp
+		../Tetris1/rect2.cpp \
+		../Tetris1/area.cpp \
+		../Tetris1/score.cpp moc_rect1.cpp
 OBJECTS       = main.o \
 		rect1.o \
 		game.o \
 		arboles.o \
 		nodo.o \
 		rect2.o \
-		moc_rect1.o \
-		moc_rect2.o
+		area.o \
+		score.o \
+		moc_rect1.o
 DIST          = ../../Qt5.5.0/5.5/gcc/mkspecs/features/spec_pre.prf \
 		../../Qt5.5.0/5.5/gcc/mkspecs/common/unix.conf \
 		../../Qt5.5.0/5.5/gcc/mkspecs/common/linux.conf \
@@ -197,12 +199,16 @@ DIST          = ../../Qt5.5.0/5.5/gcc/mkspecs/features/spec_pre.prf \
 		../Tetris1/game.h \
 		../Tetris1/arboles.h \
 		../Tetris1/nodo.h \
-		../Tetris1/rect2.h ../Tetris1/main.cpp \
+		../Tetris1/rect2.h \
+		../Tetris1/area.h \
+		../Tetris1/score.h ../Tetris1/main.cpp \
 		../Tetris1/rect1.cpp \
 		../Tetris1/game.cpp \
 		../Tetris1/arboles.cpp \
 		../Tetris1/nodo.cpp \
-		../Tetris1/rect2.cpp
+		../Tetris1/rect2.cpp \
+		../Tetris1/area.cpp \
+		../Tetris1/score.cpp
 QMAKE_TARGET  = Tetris1
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = Tetris1
@@ -518,8 +524,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../Tetris1/rect1.h ../Tetris1/game.h ../Tetris1/arboles.h ../Tetris1/nodo.h ../Tetris1/rect2.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Tetris1/main.cpp ../Tetris1/rect1.cpp ../Tetris1/game.cpp ../Tetris1/arboles.cpp ../Tetris1/nodo.cpp ../Tetris1/rect2.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Tetris1/rect1.h ../Tetris1/game.h ../Tetris1/arboles.h ../Tetris1/nodo.h ../Tetris1/rect2.h ../Tetris1/area.h ../Tetris1/score.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Tetris1/main.cpp ../Tetris1/rect1.cpp ../Tetris1/game.cpp ../Tetris1/arboles.cpp ../Tetris1/nodo.cpp ../Tetris1/rect2.cpp ../Tetris1/area.cpp ../Tetris1/score.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -542,9 +548,9 @@ check: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_rect1.cpp moc_rect2.cpp
+compiler_moc_header_make_all: moc_rect1.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_rect1.cpp moc_rect2.cpp
+	-$(DEL_FILE) moc_rect1.cpp
 moc_rect1.cpp: ../../Qt5.5.0/5.5/gcc/include/QtWidgets/QGraphicsRectItem \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qgraphicsitem.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/qglobal.h \
@@ -635,9 +641,6 @@ moc_rect1.cpp: ../../Qt5.5.0/5.5/gcc/include/QtWidgets/QGraphicsRectItem \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/QObject \
 		../Tetris1/rect1.h
 	/home/jonathan/Qt5.5.0/5.5/gcc/bin/moc $(DEFINES) -I/home/jonathan/Qt5.5.0/5.5/gcc/mkspecs/linux-g++-32 -I/home/jonathan/Estructura/Tetris1 -I/home/jonathan/Qt5.5.0/5.5/gcc/include -I/home/jonathan/Qt5.5.0/5.5/gcc/include/QtPrintSupport -I/home/jonathan/Qt5.5.0/5.5/gcc/include/QtWidgets -I/home/jonathan/Qt5.5.0/5.5/gcc/include/QtGui -I/home/jonathan/Qt5.5.0/5.5/gcc/include/QtCore -I. ../Tetris1/rect1.h -o moc_rect1.cpp
-
-moc_rect2.cpp: ../Tetris1/rect2.h
-	/home/jonathan/Qt5.5.0/5.5/gcc/bin/moc $(DEFINES) -I/home/jonathan/Qt5.5.0/5.5/gcc/mkspecs/linux-g++-32 -I/home/jonathan/Estructura/Tetris1 -I/home/jonathan/Qt5.5.0/5.5/gcc/include -I/home/jonathan/Qt5.5.0/5.5/gcc/include/QtPrintSupport -I/home/jonathan/Qt5.5.0/5.5/gcc/include/QtWidgets -I/home/jonathan/Qt5.5.0/5.5/gcc/include/QtGui -I/home/jonathan/Qt5.5.0/5.5/gcc/include/QtCore -I. ../Tetris1/rect2.h -o moc_rect2.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -781,7 +784,11 @@ main.o: ../Tetris1/main.cpp ../../Qt5.5.0/5.5/gcc/include/QtWidgets/QApplication
 		../../Qt5.5.0/5.5/gcc/include/QtCore/QString \
 		../Tetris1/rect2.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/QQueue \
-		../../Qt5.5.0/5.5/gcc/include/QtCore/qqueue.h
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qqueue.h \
+		../Tetris1/score.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/QGraphicsTextItem \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/QLabel \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qlabel.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Tetris1/main.cpp
 
 rect1.o: ../Tetris1/rect1.cpp ../Tetris1/rect1.h \
@@ -909,7 +916,11 @@ rect1.o: ../Tetris1/rect1.cpp ../Tetris1/rect1.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/QString \
 		../Tetris1/rect2.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/QQueue \
-		../../Qt5.5.0/5.5/gcc/include/QtCore/qqueue.h
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qqueue.h \
+		../Tetris1/score.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/QGraphicsTextItem \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/QLabel \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qlabel.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o rect1.o ../Tetris1/rect1.cpp
 
 game.o: ../Tetris1/game.cpp ../Tetris1/game.h \
@@ -1028,12 +1039,16 @@ game.o: ../Tetris1/game.cpp ../Tetris1/game.h \
 		../Tetris1/nodo.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/QString \
 		../Tetris1/rect2.h \
-		../../Qt5.5.0/5.5/gcc/include/QtCore/QQueue \
-		../../Qt5.5.0/5.5/gcc/include/QtCore/qqueue.h \
-		../Tetris1/rect1.h \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/QGraphicsRectItem \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qgraphicsitem.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/QObject \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/QQueue \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qqueue.h \
+		../Tetris1/score.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/QGraphicsTextItem \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/QLabel \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qlabel.h \
+		../Tetris1/rect1.h \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/QGraphicsItem \
 		../../Qt5.5.0/5.5/gcc/include/QtPrintSupport/QPrinter \
 		../../Qt5.5.0/5.5/gcc/include/QtPrintSupport/qprinter.h \
@@ -1045,7 +1060,8 @@ game.o: ../Tetris1/game.cpp ../Tetris1/game.h \
 		../../Qt5.5.0/5.5/gcc/include/QtPrintSupport/qprintdialog.h \
 		../../Qt5.5.0/5.5/gcc/include/QtPrintSupport/qabstractprintdialog.h \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qdialog.h \
-		../../Qt5.5.0/5.5/gcc/include/QtGui/QPainter
+		../../Qt5.5.0/5.5/gcc/include/QtGui/QPainter \
+		../Tetris1/area.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o game.o ../Tetris1/game.cpp
 
 arboles.o: ../Tetris1/arboles.cpp ../Tetris1/arboles.h \
@@ -1122,14 +1138,283 @@ arboles.o: ../Tetris1/arboles.cpp ../Tetris1/arboles.h \
 nodo.o: ../Tetris1/nodo.cpp ../Tetris1/nodo.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o nodo.o ../Tetris1/nodo.cpp
 
-rect2.o: ../Tetris1/rect2.cpp ../Tetris1/rect2.h
+rect2.o: ../Tetris1/rect2.cpp ../Tetris1/rect2.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/QGraphicsRectItem \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qgraphicsitem.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qglobal.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qconfig.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qfeatures.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qsystemdetection.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qprocessordetection.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qcompilerdetection.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qtypeinfo.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qtypetraits.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qsysinfo.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qlogging.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qflags.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qbasicatomic.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_bootstrap.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qgenericatomic.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_cxx11.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_gcc.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_msvc.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_armv7.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_armv6.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_armv5.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_ia64.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_mips.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_x86.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_unix.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qglobalstatic.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qmutex.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qnumeric.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qobject.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qobjectdefs.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qnamespace.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qobjectdefs_impl.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qstring.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qchar.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qbytearray.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qrefcount.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qarraydata.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qstringbuilder.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qlist.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qalgorithms.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qiterator.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qbytearraylist.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qstringlist.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qregexp.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qstringmatcher.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qcoreevent.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qscopedpointer.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qmetatype.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qvarlengtharray.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qcontainerfwd.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qisenum.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qobject_impl.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qvariant.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qmap.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qpair.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qdebug.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qhash.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qtextstream.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qiodevice.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qlocale.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qshareddata.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qvector.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qpoint.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qset.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qcontiguouscache.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qrect.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qmargins.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qsize.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qpainterpath.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qmatrix.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qpolygon.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qregion.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qwindowdefs.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qwindowdefs_win.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qdatastream.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qline.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qpixmap.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qpaintdevice.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qcolor.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qrgb.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qsharedpointer.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qsharedpointer_impl.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qimage.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qtransform.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qpixelformat.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/QObject
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o rect2.o ../Tetris1/rect2.cpp
+
+area.o: ../Tetris1/area.cpp ../Tetris1/area.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/QGraphicsRectItem \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qgraphicsitem.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qglobal.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qconfig.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qfeatures.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qsystemdetection.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qprocessordetection.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qcompilerdetection.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qtypeinfo.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qtypetraits.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qsysinfo.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qlogging.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qflags.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qbasicatomic.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_bootstrap.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qgenericatomic.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_cxx11.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_gcc.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_msvc.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_armv7.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_armv6.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_armv5.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_ia64.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_mips.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_x86.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_unix.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qglobalstatic.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qmutex.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qnumeric.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qobject.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qobjectdefs.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qnamespace.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qobjectdefs_impl.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qstring.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qchar.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qbytearray.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qrefcount.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qarraydata.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qstringbuilder.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qlist.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qalgorithms.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qiterator.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qbytearraylist.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qstringlist.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qregexp.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qstringmatcher.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qcoreevent.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qscopedpointer.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qmetatype.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qvarlengtharray.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qcontainerfwd.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qisenum.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qobject_impl.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qvariant.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qmap.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qpair.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qdebug.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qhash.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qtextstream.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qiodevice.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qlocale.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qshareddata.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qvector.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qpoint.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qset.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qcontiguouscache.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qrect.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qmargins.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qsize.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qpainterpath.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qmatrix.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qpolygon.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qregion.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qwindowdefs.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qwindowdefs_win.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qdatastream.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qline.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qpixmap.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qpaintdevice.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qcolor.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qrgb.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qsharedpointer.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qsharedpointer_impl.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qimage.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qtransform.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qpixelformat.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/QObject
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o area.o ../Tetris1/area.cpp
+
+score.o: ../Tetris1/score.cpp ../Tetris1/score.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/QGraphicsTextItem \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qgraphicsitem.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qglobal.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qconfig.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qfeatures.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qsystemdetection.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qprocessordetection.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qcompilerdetection.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qtypeinfo.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qtypetraits.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qsysinfo.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qlogging.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qflags.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qbasicatomic.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_bootstrap.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qgenericatomic.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_cxx11.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_gcc.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_msvc.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_armv7.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_armv6.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_armv5.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_ia64.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_mips.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_x86.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_unix.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qglobalstatic.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qmutex.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qnumeric.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qobject.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qobjectdefs.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qnamespace.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qobjectdefs_impl.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qstring.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qchar.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qbytearray.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qrefcount.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qarraydata.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qstringbuilder.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qlist.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qalgorithms.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qiterator.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qbytearraylist.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qstringlist.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qregexp.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qstringmatcher.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qcoreevent.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qscopedpointer.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qmetatype.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qvarlengtharray.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qcontainerfwd.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qisenum.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qobject_impl.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qvariant.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qmap.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qpair.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qdebug.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qhash.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qtextstream.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qiodevice.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qlocale.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qshareddata.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qvector.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qpoint.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qset.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qcontiguouscache.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qrect.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qmargins.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qsize.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qpainterpath.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qmatrix.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qpolygon.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qregion.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qwindowdefs.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qwindowdefs_win.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qdatastream.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qline.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qpixmap.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qpaintdevice.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qcolor.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qrgb.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qsharedpointer.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qsharedpointer_impl.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qimage.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qtransform.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qpixelformat.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/QString \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/QFont \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qfont.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o score.o ../Tetris1/score.cpp
 
 moc_rect1.o: moc_rect1.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_rect1.o moc_rect1.cpp
-
-moc_rect2.o: moc_rect2.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_rect2.o moc_rect2.cpp
 
 ####### Install
 

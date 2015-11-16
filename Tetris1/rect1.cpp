@@ -28,7 +28,7 @@ void rect1::move(){
         this->clearFocus();
         timer->stop();
         if(Game::arreglo[fila]==10){
-            game->puntos+=10;
+            game->puntos->increase();
             Game::arreglo[fila]=0;
             game->elim(fila);
         }

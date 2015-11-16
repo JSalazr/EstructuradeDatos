@@ -18,13 +18,17 @@ SOURCES += main.cpp\
     game.cpp \
     arboles.cpp \
     nodo.cpp \
-    rect2.cpp
+    rect2.cpp \
+    area.cpp \
+    score.cpp
 
 HEADERS  += \
     rect1.h \
     game.h \
     arboles.h \
     nodo.h \
-    rect2.h
+    rect2.h \
+    area.h \
+    score.h
 
 FORMS    +=

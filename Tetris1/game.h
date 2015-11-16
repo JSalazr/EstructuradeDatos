@@ -5,12 +5,15 @@
 #include "arboles.h"
 #include "rect2.h"
 #include <QQueue>
+#include "score.h"
+#include <QLabel>
 
 class Game
 {
 public:
     static int arreglo[20];
-    int puntos;
+    Score *puntos;
+    QLabel *sigs[3];
     Arboles *arr[3];
     rect2 *siguientes[3];
     QQueue<Arboles*>arboles;
