@@ -29,7 +29,6 @@ Game::Game()
         scene->addItem(siguientes[cont]);
         sigs[cont]=new QLabel();
         sigs[cont]->setText(QString::fromLatin1(arr[cont]->arr));
-        sigs[cont]->paintEngine();
     }
 
     scene->addItem(rect);
