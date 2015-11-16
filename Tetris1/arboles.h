@@ -8,7 +8,7 @@
 class Arboles
 {
 public:
-    char arr[7];
+    char arr[11];
     int resp;
     Arboles();
     void resolver();

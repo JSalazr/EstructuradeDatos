@@ -6,8 +6,8 @@ Nodo* raiz;
 
 Arboles::Arboles()
 {
-    for(int cont=0; cont<7; cont++){
-        if(cont==1 || cont==3 || cont==5){
+    for(int cont=0; cont<11; cont++){
+        if(cont==2 || cont==5 || cont==8){
             switch(rand() % 3){
                 case 0:
                     arr[cont]='+'; break;
@@ -16,20 +16,24 @@ Arboles::Arboles()
                 case 2:
                     arr[cont]='*'; break;
             }
+        }else if(cont==1 || cont==3 || cont==7 || cont==9){
+            arr[cont]=(rand() % 5+1)+'0';
+        }else if(cont==0 || cont==6){
+            arr[cont]='(';
         }else{
-            arr[cont]=rand() % 5+1;
+            arr[cont]=')';
         }
     }
 }
 
 void Arboles::armar(){
-    raiz=new Nodo(arr[3]);
-    raiz->izq=new Nodo(arr[1]);
-    raiz->izq->izq=new Nodo(arr[0]);
-    raiz->izq->der=new Nodo(arr[2]);
-    raiz->der=new Nodo(arr[5]);
-    raiz->der->izq=new Nodo(arr[4]);
-    raiz->der->der=new Nodo(arr[6]);
+    raiz=new Nodo(arr[5]);
+    raiz->izq=new Nodo(arr[2]);
+    raiz->izq->izq=new Nodo(arr[1]);
+    raiz->izq->der=new Nodo(arr[3]);
+    raiz->der=new Nodo(arr[8]);
+    raiz->der->izq=new Nodo(arr[7]);
+    raiz->der->der=new Nodo(arr[9]);
 
 }
 
