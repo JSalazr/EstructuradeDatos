@@ -37,13 +37,15 @@ void rect1::move(){
         timer->stop();
         if(Game::arreglo[fila]==tam && tam<10){
             game->filaAlta++;
+            game->log.push(game->logs[9]);
             for(int cont=9; cont>0; cont--){
                 game->logs[cont]->actualizar(game->logs[cont-1]->texto);
             }
             game->logs[0]->actualizar(QString("Fila nueva"));
         }
-        if(Game::arreglo[fila]==10){
+        if(Game::arreglo[fila]==10 && pos().y()>0){
             game->filaAlta--;
+            game->log.push(game->logs[9]);
             for(int cont=9; cont>0; cont--){
                 game->logs[cont]->actualizar(game->logs[cont-1]->texto);
             }
@@ -52,7 +54,7 @@ void rect1::move(){
             Game::arreglo[fila]=0;
             game->elim(fila);
         }
-        if(Game::arreglo[fila]<10 && pos().y()<=0){
+        if(pos().y()<=0){
             game->gameOver();
         }
     }
@@ -99,9 +101,6 @@ void rect1::keyPressEvent(QKeyEvent *event)
        else if(event->key()==Qt::Key_Down){
            if(this->y()<570 && collitems.empty())
                setPos(x(),y()+30);
-       }
-       else if(event->key()== Qt::Key_Space){
-           setRotation(90);
        }
 }
 

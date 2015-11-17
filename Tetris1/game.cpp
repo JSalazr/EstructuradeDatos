@@ -15,6 +15,7 @@ using namespace::std;
 
 Game::Game()
 {
+    cantjuegos=0;
     puntos=new Score();
     scene = new QGraphicsScene();
     QString puntaje=""+puntaje;
@@ -32,26 +33,32 @@ Game::Game()
         scene->addItem(siguientes[cont]);
     }
 
+    for(int cont=0; cont<3; cont++){
+        juego[cont]=new Log();
+        scene->addItem(juego[cont]);
+        juego[cont]->setPos(310, 250+cont*20);
+    }
+
     for(int cont=0; cont<10; cont++){
         logs[cont]=new Log();
         scene->addItem(logs[cont]);
-        logs[cont]->setPos(310, 400+30*(5-cont));
+        logs[cont]->setPos(310, 450+25*(5-cont));
     }
 
     sig1=new Siguientes();
     sig1->actualizar(QString::fromLatin1(arr[0]->arr));
     scene->addItem(sig1);
-    sig1->setPos(480, 50*3);
+    sig1->setPos(520, 50*3);
 
     sig2=new Siguientes();
     sig2->actualizar(QString::fromLatin1(arr[1]->arr));
     scene->addItem(sig2);
-    sig2->setPos(480, 50*2);
+    sig2->setPos(520, 50*2);
 
     sig3=new Siguientes();
     sig3->actualizar(QString::fromLatin1(arr[2]->arr));
     scene->addItem(sig3);
-    sig3->setPos(480, 50*1);
+    sig3->setPos(520, 50*1);
 
     scene->addItem(rect);
     scene->addItem(puntos);
@@ -107,11 +114,28 @@ void Game::llenarArboles()
 }
 
 void Game::gameOver(){
+    cantjuegos++;
     QList<QGraphicsItem*> lista=scene->items();
+    juegos.push(juego[2]);
+    for(int cont=2; cont>0; cont--){
+        juego[cont]->actualizar(juego[cont-1]->texto);
+    }
+    juego[0]->actualizar(QString("Puntuacion ") +QString::number(cantjuegos) +QString(": ")+ QString::number(puntos->getScore()));
     for(int cont=0; cont<lista.size(); cont++){
         if(typeid(*lista[cont])==typeid(rect1)){
             delete lista[cont];
         }
     }
+    for(int cont=0; cont<20; cont++){
+        arreglo[cont]=0;
+    }
+    puntos->resetScore();
+    llenarArboles();
+    Arboles *temp=arboles.dequeue();
+    rect1* rect = new rect1(temp->resp);
+    rect->setFlag(QGraphicsItem :: ItemIsFocusable);
+    rect->setFocus();
+
+    scene->addItem(rect);
 }
 
