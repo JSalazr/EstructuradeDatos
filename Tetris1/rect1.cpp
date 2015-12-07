@@ -12,13 +12,19 @@ rect1::rect1(int tam)
 {
     this->tam=tam;
     setRect(0, -1, 30*this->tam-1, 30);
-    switch(rand()%3+1){
+    switch(rand()%6+1){
         case 1:
             this->setBrush(Qt::green); break;
         case 2:
             this->setBrush(Qt::red); break;
         case 3:
             this->setBrush(Qt::blue); break;
+        case 4:
+            this->setBrush(Qt::yellow); break;
+        case 5:
+            this->setBrush(Qt::gray); break;
+        case 6:
+            this->setBrush(Qt::cyan); break;
     }
 
     timer=new QTimer();
@@ -63,15 +69,18 @@ void rect1::move(){
 void rect1::nuevo()
 {
     rect1* a=new rect1(game->arr[0]->resp);
-    if(game->arboles.empty()){
+    game->cubos[game->cantCubos]=a;
+    game->cantCubos++;
+    if(game->cantArboles<5){
         game->llenarArboles();
     }
     game->arr[0]=game->arr[1];
     game->arr[1]=game->arr[2];
-    game->arr[2]=game->arboles.dequeue();
-    game->sig1->actualizar(QString::fromLatin1(game->arr[0]->arr));
-    game->sig2->actualizar(QString::fromLatin1(game->arr[1]->arr));
-    game->sig3->actualizar(QString::fromLatin1(game->arr[2]->arr));
+    game->arr[2]=game->cola->pop(&game->cola->begin,&game->cola->last);
+    game->cantArboles--;
+    game->sig1->actualizar(game->arr[0]->string);
+    game->sig2->actualizar(game->arr[1]->string);
+    game->sig3->actualizar(game->arr[2]->string);
     for(int cont=0; cont<3; cont++){
         delete game->siguientes[cont];
     }

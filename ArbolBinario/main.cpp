@@ -10,6 +10,8 @@ public:
     Nodo* der;
     Nodo(int valor){
         this->valor=valor;
+        izq=NULL;
+        der=NULL;
     }
 };
 
@@ -18,8 +20,7 @@ Nodo* raiz;
 void agregar(Nodo* nodo, Nodo* temp){
     if(temp==NULL){
         raiz=nodo;
-    }
-    else{
+    }else{
         if(temp->valor>nodo->valor){
             if(temp->izq==NULL){
                 temp->izq=nodo;
@@ -95,11 +96,13 @@ void eliminar(int valor, Nodo* temp){
 
 
 void imprimir(Nodo* raiz){
-    cout<<raiz->valor<<endl;
-    if(raiz->izq!=NULL)
-        imprimir(raiz->izq);
-    if(raiz->der!=NULL)
-        imprimir(raiz->der);
+    if(raiz!=NULL){
+        cout<<raiz->valor<<endl;
+        if(raiz->izq!=NULL)
+            imprimir(raiz->izq);
+        if(raiz->der!=NULL)
+            imprimir(raiz->der);
+    }
 }
 
 int main(int argc, char *argv[])

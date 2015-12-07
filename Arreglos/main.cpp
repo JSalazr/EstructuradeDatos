@@ -34,14 +34,14 @@ bool insertar(int pos, int valor){
             cantAct++;
             return true;
         }
-    if(pos>cantAct)
+    if(pos>=cantAct)
         return agregar(valor);
 
     return false;
 }
 
 int buscar(int valor){
-    for(int cont=0; cont<cant; cant++){
+    for(int cont=0; cont<cantAct; cont++){
         if(arreglo[cont]==valor)
             return cont;
     }
@@ -49,7 +49,7 @@ int buscar(int valor){
 }
 
 void imprimir(){
-    for(int cont=0; cont<cant; cant++){
+    for(int cont=0; cont<cantAct; cont++){
         cout<<arreglo[cont]<<endl;
     }
 }
@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
                 agregar(valor); break;
             case 2:
                 cin>>valor;
-                cout<<buscar(valor)->valor<<endl; break;
+                cout<<buscar(valor)<<endl; break;
             case 3:
                 cin>>valor;
                 eliminar(valor); break;
@@ -82,6 +82,8 @@ int main(int argc, char *argv[])
                 insertar(pos, valor); break;
             case 5:
                 imprimir(); break;
-   }
+        }
+ }
     return a.exec();
 }
+

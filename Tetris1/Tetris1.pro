@@ -22,7 +22,9 @@ SOURCES += main.cpp\
     area.cpp \
     score.cpp \
     siguientes.cpp \
-    log.cpp
+    log.cpp \
+    nodocola.cpp \
+    cola.cpp
 
 HEADERS  += \
     rect1.h \
@@ -33,6 +35,8 @@ HEADERS  += \
     area.h \
     score.h \
     siguientes.h \
-    log.h
+    log.h \
+    nodocola.h \
+    cola.h
 
 FORMS    +=
