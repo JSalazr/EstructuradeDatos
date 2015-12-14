@@ -1,0 +1,11 @@
+#include "tablaD.h"
+#include <limits>
+
+TablaD::Tabla(Nodo* nodo)
+{
+    this->nodo=nodo;
+    costo=std::numeric_limits<int>::max();
+    visitado=false;
+    path=-1;
+}
+

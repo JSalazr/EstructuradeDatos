@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>MainForm.ui.qml</file>
+        <file>Aq6M22ZCSVl418kNFwTmY5TLdokIrKVgOIMNt-2jKfCq.jpg</file>
+    </qresource>
+</RCC>

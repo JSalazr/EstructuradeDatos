@@ -26,6 +26,10 @@ Game::Game()
     NodoCola *temp=cola->pop(&cola->begin,&cola->last);
     cantArboles--;
     Area* area=new Area();
+    QPixmap image1;
+    image1.load("mapa.png");
+    scene->addPixmap(image1);
+    scene->setSceneRect(image1.rect());
     scene->addItem(area);
     rect1* rect = new rect1(temp->resp);
     cubos[cantCubos]=rect;
@@ -78,7 +82,7 @@ Game::Game()
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     view->show();
-    view->setFixedSize(603,603);
+    view->setFixedSize(700,603);
     scene->setSceneRect(0, 0, 603, 603);
 }
 

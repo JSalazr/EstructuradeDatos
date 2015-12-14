@@ -2,6 +2,8 @@
 #define GAME_H
 #include <QGraphicsScene>
 #include <QGraphicsView>
+#include <QLabel>
+#include <QImage>
 #include "arboles.h"
 #include "rect2.h"
 #include <QQueue>
@@ -33,6 +35,7 @@ public:
     rect2 *siguientes[3];
     NodoCola *arboles;
     QGraphicsScene *scene;
+    QLabel *image;
     QGraphicsView *view;
     int filaAlta;
     Game();
