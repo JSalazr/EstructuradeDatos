@@ -36,6 +36,8 @@ public:
     QToolButton *botonKruskal;
     QLabel *label_2;
     QLineEdit *DCiudad;
+    QLineEdit *DCiudadDestino;
+    QToolButton *toolButton;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -44,7 +46,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(1343, 906);
+        MainWindow->resize(1347, 906);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         label = new QLabel(centralWidget);
@@ -54,7 +56,7 @@ public:
         label->setPixmap(QPixmap(QString::fromUtf8("../Mapa/mapa.jpg")));
         botonDijkstra = new QToolButton(centralWidget);
         botonDijkstra->setObjectName(QStringLiteral("botonDijkstra"));
-        botonDijkstra->setGeometry(QRect(80, 0, 101, 24));
+        botonDijkstra->setGeometry(QRect(30, 0, 101, 24));
         botonDijkstra->setMouseTracking(true);
         botonDijkstra->setCheckable(false);
         botonPrim = new QToolButton(centralWidget);
@@ -72,11 +74,17 @@ public:
         label_2->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
         DCiudad = new QLineEdit(centralWidget);
         DCiudad->setObjectName(QStringLiteral("DCiudad"));
-        DCiudad->setGeometry(QRect(200, 0, 113, 26));
+        DCiudad->setGeometry(QRect(140, 0, 113, 26));
+        DCiudadDestino = new QLineEdit(centralWidget);
+        DCiudadDestino->setObjectName(QStringLiteral("DCiudadDestino"));
+        DCiudadDestino->setGeometry(QRect(270, 0, 113, 26));
+        toolButton = new QToolButton(centralWidget);
+        toolButton->setObjectName(QStringLiteral("toolButton"));
+        toolButton->setGeometry(QRect(950, 30, 71, 24));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1343, 24));
+        menuBar->setGeometry(QRect(0, 0, 1347, 24));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -98,7 +106,8 @@ public:
         botonPrim->setText(QApplication::translate("MainWindow", "Prim", 0));
         botonFloyd->setText(QApplication::translate("MainWindow", "Floyd", 0));
         botonKruskal->setText(QApplication::translate("MainWindow", "Kruskal", 0));
-        label_2->setText(QApplication::translate("MainWindow", "TextLabel", 0));
+        label_2->setText(QString());
+        toolButton->setText(QApplication::translate("MainWindow", "Reset", 0));
     } // retranslateUi
 
 };

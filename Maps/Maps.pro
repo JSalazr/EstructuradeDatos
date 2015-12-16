@@ -17,12 +17,20 @@ SOURCES += main.cpp\
     nodo.cpp \
     arista.cpp \
     tablad.cpp \
-    dijkstra.cpp
+    dijkstra.cpp \
+    floyd.cpp \
+    label.cpp
 
 HEADERS  += mainwindow.h \
     nodo.h \
     arista.h \
     tablad.h \
-    dijkstra.h
+    dijkstra.h \
+    floyd.h \
+    label.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    label.ui
+
+DISTFILES += \
+    mapa.jpg
