@@ -408,6 +408,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     dijkstra=new Dijkstra(ciudades);
     floyd=new Floyd(ciudades);
+    prim=new Prim(ciudades);
     pintarLineas();
 
 }
@@ -448,7 +449,28 @@ void MainWindow::on_botonDijkstra_clicked()
 
 void MainWindow::on_botonPrim_clicked()
 {
+    int num1=prim->buscar(ui->PrimEdit->text());
+    cout<<ui->PrimEdit->text().toUtf8().constData();
+    cout<<num1<<endl;
+    if(num1!=-1)
+        prim->resolverD(num1);
+    QString text="Ciudad\tCosto\tPath \n";
+    for(int cont=0; cont<54; cont++){
+        text=text+prim->ciudadesD[cont]->nodo->ciudad+"\t"+QString::number(prim->ciudadesD[cont]->costo)+
+                "\t"+QString::number(prim->ciudadesD[cont]->path)+"\n";
+    }
 
+    QPen penHLines(QColor("#00ff00"), 1, Qt::SolidLine, Qt::FlatCap, Qt::RoundJoin);
+    painter->setPen(penHLines);
+    for(int num2=0; num2<54; num2++){
+        if(prim->ciudadesD[num2]->path!=-1)
+        painter->drawLine(prim->ciudadesD[num2]->nodo->punto.x(), prim->ciudadesD[num2]->nodo->punto.y(),
+                          prim->ciudadesD[prim->ciudadesD[num2]->path]->nodo->punto.x(),
+                prim->ciudadesD[prim->ciudadesD[num2]->path]->nodo->punto.y());
+    }
+    ui->label->setPixmap(QPixmap::fromImage(*tmp));
+    label->show();
+    label->print(text);
 }
 
 void MainWindow::on_botonFloyd_clicked()
@@ -473,4 +495,7 @@ void MainWindow::on_botonFloyd_clicked()
 void MainWindow::on_toolButton_clicked()
 {
         pintarLineas();
+        dijkstra=new Dijkstra(ciudades);
+        prim=new Prim(ciudades);
+        floyd=new Floyd(ciudades);
 }

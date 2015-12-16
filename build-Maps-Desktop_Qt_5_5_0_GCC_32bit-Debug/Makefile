@@ -55,7 +55,8 @@ SOURCES       = ../Maps/main.cpp \
 		../Maps/tablad.cpp \
 		../Maps/dijkstra.cpp \
 		../Maps/floyd.cpp \
-		../Maps/label.cpp moc_mainwindow.cpp \
+		../Maps/label.cpp \
+		../Maps/prim.cpp moc_mainwindow.cpp \
 		moc_label.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
@@ -65,6 +66,7 @@ OBJECTS       = main.o \
 		dijkstra.o \
 		floyd.o \
 		label.o \
+		prim.o \
 		moc_mainwindow.o \
 		moc_label.o
 DIST          = ../Maps/mapa.jpg \
@@ -204,14 +206,16 @@ DIST          = ../Maps/mapa.jpg \
 		../Maps/tablad.h \
 		../Maps/dijkstra.h \
 		../Maps/floyd.h \
-		../Maps/label.h ../Maps/main.cpp \
+		../Maps/label.h \
+		../Maps/prim.h ../Maps/main.cpp \
 		../Maps/mainwindow.cpp \
 		../Maps/nodo.cpp \
 		../Maps/arista.cpp \
 		../Maps/tablad.cpp \
 		../Maps/dijkstra.cpp \
 		../Maps/floyd.cpp \
-		../Maps/label.cpp
+		../Maps/label.cpp \
+		../Maps/prim.cpp
 QMAKE_TARGET  = Maps
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = Maps
@@ -525,8 +529,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../Maps/mainwindow.h ../Maps/nodo.h ../Maps/arista.h ../Maps/tablad.h ../Maps/dijkstra.h ../Maps/floyd.h ../Maps/label.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Maps/main.cpp ../Maps/mainwindow.cpp ../Maps/nodo.cpp ../Maps/arista.cpp ../Maps/tablad.cpp ../Maps/dijkstra.cpp ../Maps/floyd.cpp ../Maps/label.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Maps/mainwindow.h ../Maps/nodo.h ../Maps/arista.h ../Maps/tablad.h ../Maps/dijkstra.h ../Maps/floyd.h ../Maps/label.h ../Maps/prim.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Maps/main.cpp ../Maps/mainwindow.cpp ../Maps/nodo.cpp ../Maps/arista.cpp ../Maps/tablad.cpp ../Maps/dijkstra.cpp ../Maps/floyd.cpp ../Maps/label.cpp ../Maps/prim.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../Maps/mainwindow.ui ../Maps/label.ui $(DISTDIR)/
 
 
@@ -591,6 +595,8 @@ moc_mainwindow.cpp: ../Maps/nodo.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/qnamespace.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/qarraydata.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/qstringbuilder.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/QPoint \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qpoint.h \
 		../Maps/dijkstra.h \
 		../Maps/tablad.h \
 		../Maps/label.h \
@@ -619,7 +625,6 @@ moc_mainwindow.cpp: ../Maps/nodo.h \
 		../../Qt5.5.0/5.5/gcc/include/QtGui/qpaintdevice.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/qrect.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/qsize.h \
-		../../Qt5.5.0/5.5/gcc/include/QtCore/qpoint.h \
 		../../Qt5.5.0/5.5/gcc/include/QtGui/qpalette.h \
 		../../Qt5.5.0/5.5/gcc/include/QtGui/qcolor.h \
 		../../Qt5.5.0/5.5/gcc/include/QtGui/qrgb.h \
@@ -676,6 +681,23 @@ moc_mainwindow.cpp: ../Maps/nodo.h \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qmainwindow.h \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qtabwidget.h \
 		../../Qt5.5.0/5.5/gcc/include/QtGui/qicon.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/QTableView \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qtableview.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qabstractitemview.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qabstractscrollarea.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qabstractitemmodel.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qitemselectionmodel.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qabstractitemdelegate.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qstyleoption.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qabstractspinbox.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qvalidator.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qregularexpression.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qslider.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qabstractslider.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qstyle.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qtabbar.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qrubberband.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/QImage \
 		../Maps/mainwindow.h
 	/home/jonathan/Qt5.5.0/5.5/gcc/bin/moc $(DEFINES) -I/home/jonathan/Qt5.5.0/5.5/gcc/mkspecs/linux-g++-32 -I/home/jonathan/Estructura/Maps -I/home/jonathan/Qt5.5.0/5.5/gcc/include -I/home/jonathan/Qt5.5.0/5.5/gcc/include/QtWidgets -I/home/jonathan/Qt5.5.0/5.5/gcc/include/QtGui -I/home/jonathan/Qt5.5.0/5.5/gcc/include/QtCore -I. ../Maps/mainwindow.h -o moc_mainwindow.cpp
 
@@ -844,6 +866,8 @@ main.o: ../Maps/main.cpp ../Maps/mainwindow.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/qnamespace.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/qarraydata.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/qstringbuilder.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/QPoint \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qpoint.h \
 		../Maps/dijkstra.h \
 		../Maps/tablad.h \
 		../Maps/label.h \
@@ -872,7 +896,6 @@ main.o: ../Maps/main.cpp ../Maps/mainwindow.h \
 		../../Qt5.5.0/5.5/gcc/include/QtGui/qpaintdevice.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/qrect.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/qsize.h \
-		../../Qt5.5.0/5.5/gcc/include/QtCore/qpoint.h \
 		../../Qt5.5.0/5.5/gcc/include/QtGui/qpalette.h \
 		../../Qt5.5.0/5.5/gcc/include/QtGui/qcolor.h \
 		../../Qt5.5.0/5.5/gcc/include/QtGui/qrgb.h \
@@ -929,6 +952,23 @@ main.o: ../Maps/main.cpp ../Maps/mainwindow.h \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qmainwindow.h \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qtabwidget.h \
 		../../Qt5.5.0/5.5/gcc/include/QtGui/qicon.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/QTableView \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qtableview.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qabstractitemview.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qabstractscrollarea.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qabstractitemmodel.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qitemselectionmodel.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qabstractitemdelegate.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qstyleoption.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qabstractspinbox.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qvalidator.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qregularexpression.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qslider.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qabstractslider.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qstyle.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qtabbar.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qrubberband.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/QImage \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/QApplication \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qapplication.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/qcoreapplication.h \
@@ -977,6 +1017,8 @@ mainwindow.o: ../Maps/mainwindow.cpp ../Maps/mainwindow.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/qnamespace.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/qarraydata.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/qstringbuilder.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/QPoint \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qpoint.h \
 		../Maps/dijkstra.h \
 		../Maps/tablad.h \
 		../Maps/label.h \
@@ -1005,7 +1047,6 @@ mainwindow.o: ../Maps/mainwindow.cpp ../Maps/mainwindow.h \
 		../../Qt5.5.0/5.5/gcc/include/QtGui/qpaintdevice.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/qrect.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/qsize.h \
-		../../Qt5.5.0/5.5/gcc/include/QtCore/qpoint.h \
 		../../Qt5.5.0/5.5/gcc/include/QtGui/qpalette.h \
 		../../Qt5.5.0/5.5/gcc/include/QtGui/qcolor.h \
 		../../Qt5.5.0/5.5/gcc/include/QtGui/qrgb.h \
@@ -1062,6 +1103,23 @@ mainwindow.o: ../Maps/mainwindow.cpp ../Maps/mainwindow.h \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qmainwindow.h \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qtabwidget.h \
 		../../Qt5.5.0/5.5/gcc/include/QtGui/qicon.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/QTableView \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qtableview.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qabstractitemview.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qabstractscrollarea.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qabstractitemmodel.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qitemselectionmodel.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qabstractitemdelegate.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qstyleoption.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qabstractspinbox.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qvalidator.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qregularexpression.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qslider.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qabstractslider.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qstyle.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qtabbar.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qrubberband.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/QImage \
 		ui_mainwindow.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/QVariant \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/QAction \
@@ -1078,20 +1136,6 @@ mainwindow.o: ../Maps/mainwindow.cpp ../Maps/mainwindow.h \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qbuttongroup.h \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/QHeaderView \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qheaderview.h \
-		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qabstractitemview.h \
-		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qabstractscrollarea.h \
-		../../Qt5.5.0/5.5/gcc/include/QtCore/qabstractitemmodel.h \
-		../../Qt5.5.0/5.5/gcc/include/QtCore/qitemselectionmodel.h \
-		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qabstractitemdelegate.h \
-		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qstyleoption.h \
-		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qabstractspinbox.h \
-		../../Qt5.5.0/5.5/gcc/include/QtGui/qvalidator.h \
-		../../Qt5.5.0/5.5/gcc/include/QtCore/qregularexpression.h \
-		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qslider.h \
-		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qabstractslider.h \
-		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qstyle.h \
-		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qtabbar.h \
-		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qrubberband.h \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/QLineEdit \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qlineedit.h \
 		../../Qt5.5.0/5.5/gcc/include/QtGui/qtextcursor.h \
@@ -1145,7 +1189,9 @@ nodo.o: ../Maps/nodo.cpp ../Maps/nodo.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/qrefcount.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/qnamespace.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/qarraydata.h \
-		../../Qt5.5.0/5.5/gcc/include/QtCore/qstringbuilder.h
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qstringbuilder.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/QPoint \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qpoint.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o nodo.o ../Maps/nodo.cpp
 
 arista.o: ../Maps/arista.cpp ../Maps/arista.h \
@@ -1185,7 +1231,9 @@ arista.o: ../Maps/arista.cpp ../Maps/arista.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/qrefcount.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/qnamespace.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/qarraydata.h \
-		../../Qt5.5.0/5.5/gcc/include/QtCore/qstringbuilder.h
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qstringbuilder.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/QPoint \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qpoint.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o arista.o ../Maps/arista.cpp
 
 tablad.o: ../Maps/tablad.cpp ../Maps/tablad.h \
@@ -1226,7 +1274,9 @@ tablad.o: ../Maps/tablad.cpp ../Maps/tablad.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/qrefcount.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/qnamespace.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/qarraydata.h \
-		../../Qt5.5.0/5.5/gcc/include/QtCore/qstringbuilder.h
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qstringbuilder.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/QPoint \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qpoint.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o tablad.o ../Maps/tablad.cpp
 
 dijkstra.o: ../Maps/dijkstra.cpp ../Maps/dijkstra.h \
@@ -1269,6 +1319,8 @@ dijkstra.o: ../Maps/dijkstra.cpp ../Maps/dijkstra.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/qnamespace.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/qarraydata.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/qstringbuilder.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/QPoint \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qpoint.h \
 		../Maps/mainwindow.h \
 		../Maps/label.h \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/QWidget \
@@ -1296,7 +1348,6 @@ dijkstra.o: ../Maps/dijkstra.cpp ../Maps/dijkstra.h \
 		../../Qt5.5.0/5.5/gcc/include/QtGui/qpaintdevice.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/qrect.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/qsize.h \
-		../../Qt5.5.0/5.5/gcc/include/QtCore/qpoint.h \
 		../../Qt5.5.0/5.5/gcc/include/QtGui/qpalette.h \
 		../../Qt5.5.0/5.5/gcc/include/QtGui/qcolor.h \
 		../../Qt5.5.0/5.5/gcc/include/QtGui/qrgb.h \
@@ -1352,7 +1403,24 @@ dijkstra.o: ../Maps/dijkstra.cpp ../Maps/dijkstra.h \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/QMainWindow \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qmainwindow.h \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qtabwidget.h \
-		../../Qt5.5.0/5.5/gcc/include/QtGui/qicon.h
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qicon.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/QTableView \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qtableview.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qabstractitemview.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qabstractscrollarea.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qabstractitemmodel.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qitemselectionmodel.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qabstractitemdelegate.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qstyleoption.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qabstractspinbox.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/qvalidator.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qregularexpression.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qslider.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qabstractslider.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qstyle.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qtabbar.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qrubberband.h \
+		../../Qt5.5.0/5.5/gcc/include/QtGui/QImage
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dijkstra.o ../Maps/dijkstra.cpp
 
 floyd.o: ../Maps/floyd.cpp ../Maps/floyd.h \
@@ -1393,7 +1461,9 @@ floyd.o: ../Maps/floyd.cpp ../Maps/floyd.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/qrefcount.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/qnamespace.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/qarraydata.h \
-		../../Qt5.5.0/5.5/gcc/include/QtCore/qstringbuilder.h
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qstringbuilder.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/QPoint \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qpoint.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o floyd.o ../Maps/floyd.cpp
 
 label.o: ../Maps/label.cpp ../Maps/label.h \
@@ -1533,8 +1603,54 @@ label.o: ../Maps/label.cpp ../Maps/label.h \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qtabwidget.h \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qrubberband.h \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/QLabel \
-		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qlabel.h
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qlabel.h \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/QTableView \
+		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qtableview.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o label.o ../Maps/label.cpp
+
+prim.o: ../Maps/prim.cpp ../Maps/prim.h \
+		../Maps/nodo.h \
+		../Maps/arista.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/QString \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qstring.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qchar.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qglobal.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qconfig.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qfeatures.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qsystemdetection.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qprocessordetection.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qcompilerdetection.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qtypeinfo.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qtypetraits.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qsysinfo.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qlogging.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qflags.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qbasicatomic.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_bootstrap.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qgenericatomic.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_cxx11.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_gcc.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_msvc.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_armv7.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_armv6.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_armv5.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_ia64.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_mips.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_x86.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_unix.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qglobalstatic.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qmutex.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qnumeric.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qbytearray.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qrefcount.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qnamespace.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qarraydata.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qstringbuilder.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/QPoint \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qpoint.h \
+		../Maps/tablad.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o prim.o ../Maps/prim.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

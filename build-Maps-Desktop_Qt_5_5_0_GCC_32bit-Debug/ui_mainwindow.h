@@ -38,6 +38,7 @@ public:
     QLineEdit *DCiudad;
     QLineEdit *DCiudadDestino;
     QToolButton *toolButton;
+    QLineEdit *PrimEdit;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -81,6 +82,9 @@ public:
         toolButton = new QToolButton(centralWidget);
         toolButton->setObjectName(QStringLiteral("toolButton"));
         toolButton->setGeometry(QRect(950, 30, 71, 24));
+        PrimEdit = new QLineEdit(centralWidget);
+        PrimEdit->setObjectName(QStringLiteral("PrimEdit"));
+        PrimEdit->setGeometry(QRect(510, 0, 113, 26));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));

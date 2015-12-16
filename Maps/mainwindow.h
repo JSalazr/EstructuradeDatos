@@ -4,6 +4,7 @@
 #include "dijkstra.h"
 #include "label.h"
 #include "floyd.h"
+#include "prim.h"
 #include <QLabel>
 #include <QPainter>
 #include <QGraphicsScene>
@@ -25,6 +26,7 @@ public:
     Label *label;
     QTableView *tabla;
     Nodo* ciudades[54];
+    Prim* prim;
     Dijkstra *dijkstra;
     QPainter *painter;
     QImage *tmp;

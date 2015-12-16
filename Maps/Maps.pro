@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     tablad.cpp \
     dijkstra.cpp \
     floyd.cpp \
-    label.cpp
+    label.cpp \
+    prim.cpp
 
 HEADERS  += mainwindow.h \
     nodo.h \
@@ -27,7 +28,8 @@ HEADERS  += mainwindow.h \
     tablad.h \
     dijkstra.h \
     floyd.h \
-    label.h
+    label.h \
+    prim.h
 
 FORMS    += mainwindow.ui \
     label.ui
