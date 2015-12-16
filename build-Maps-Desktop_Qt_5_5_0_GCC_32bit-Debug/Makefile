@@ -56,7 +56,9 @@ SOURCES       = ../Maps/main.cpp \
 		../Maps/dijkstra.cpp \
 		../Maps/floyd.cpp \
 		../Maps/label.cpp \
-		../Maps/prim.cpp moc_mainwindow.cpp \
+		../Maps/prim.cpp \
+		../Maps/kruskal.cpp \
+		../Maps/uniones.cpp moc_mainwindow.cpp \
 		moc_label.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
@@ -67,6 +69,8 @@ OBJECTS       = main.o \
 		floyd.o \
 		label.o \
 		prim.o \
+		kruskal.o \
+		uniones.o \
 		moc_mainwindow.o \
 		moc_label.o
 DIST          = ../Maps/mapa.jpg \
@@ -207,7 +211,9 @@ DIST          = ../Maps/mapa.jpg \
 		../Maps/dijkstra.h \
 		../Maps/floyd.h \
 		../Maps/label.h \
-		../Maps/prim.h ../Maps/main.cpp \
+		../Maps/prim.h \
+		../Maps/kruskal.h \
+		../Maps/uniones.h ../Maps/main.cpp \
 		../Maps/mainwindow.cpp \
 		../Maps/nodo.cpp \
 		../Maps/arista.cpp \
@@ -215,7 +221,9 @@ DIST          = ../Maps/mapa.jpg \
 		../Maps/dijkstra.cpp \
 		../Maps/floyd.cpp \
 		../Maps/label.cpp \
-		../Maps/prim.cpp
+		../Maps/prim.cpp \
+		../Maps/kruskal.cpp \
+		../Maps/uniones.cpp
 QMAKE_TARGET  = Maps
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = Maps
@@ -529,8 +537,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../Maps/mainwindow.h ../Maps/nodo.h ../Maps/arista.h ../Maps/tablad.h ../Maps/dijkstra.h ../Maps/floyd.h ../Maps/label.h ../Maps/prim.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Maps/main.cpp ../Maps/mainwindow.cpp ../Maps/nodo.cpp ../Maps/arista.cpp ../Maps/tablad.cpp ../Maps/dijkstra.cpp ../Maps/floyd.cpp ../Maps/label.cpp ../Maps/prim.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Maps/mainwindow.h ../Maps/nodo.h ../Maps/arista.h ../Maps/tablad.h ../Maps/dijkstra.h ../Maps/floyd.h ../Maps/label.h ../Maps/prim.h ../Maps/kruskal.h ../Maps/uniones.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Maps/main.cpp ../Maps/mainwindow.cpp ../Maps/nodo.cpp ../Maps/arista.cpp ../Maps/tablad.cpp ../Maps/dijkstra.cpp ../Maps/floyd.cpp ../Maps/label.cpp ../Maps/prim.cpp ../Maps/kruskal.cpp ../Maps/uniones.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../Maps/mainwindow.ui ../Maps/label.ui $(DISTDIR)/
 
 
@@ -667,6 +675,9 @@ moc_mainwindow.cpp: ../Maps/nodo.h \
 		../../Qt5.5.0/5.5/gcc/include/QtGui/qvector2d.h \
 		../../Qt5.5.0/5.5/gcc/include/QtGui/qtouchdevice.h \
 		../Maps/floyd.h \
+		../Maps/prim.h \
+		../Maps/kruskal.h \
+		../Maps/uniones.h \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/QLabel \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qlabel.h \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qframe.h \
@@ -938,6 +949,9 @@ main.o: ../Maps/main.cpp ../Maps/mainwindow.h \
 		../../Qt5.5.0/5.5/gcc/include/QtGui/qvector2d.h \
 		../../Qt5.5.0/5.5/gcc/include/QtGui/qtouchdevice.h \
 		../Maps/floyd.h \
+		../Maps/prim.h \
+		../Maps/kruskal.h \
+		../Maps/uniones.h \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/QLabel \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qlabel.h \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qframe.h \
@@ -1089,6 +1103,9 @@ mainwindow.o: ../Maps/mainwindow.cpp ../Maps/mainwindow.h \
 		../../Qt5.5.0/5.5/gcc/include/QtGui/qvector2d.h \
 		../../Qt5.5.0/5.5/gcc/include/QtGui/qtouchdevice.h \
 		../Maps/floyd.h \
+		../Maps/prim.h \
+		../Maps/kruskal.h \
+		../Maps/uniones.h \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/QLabel \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qlabel.h \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qframe.h \
@@ -1390,6 +1407,9 @@ dijkstra.o: ../Maps/dijkstra.cpp ../Maps/dijkstra.h \
 		../../Qt5.5.0/5.5/gcc/include/QtGui/qvector2d.h \
 		../../Qt5.5.0/5.5/gcc/include/QtGui/qtouchdevice.h \
 		../Maps/floyd.h \
+		../Maps/prim.h \
+		../Maps/kruskal.h \
+		../Maps/uniones.h \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/QLabel \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qlabel.h \
 		../../Qt5.5.0/5.5/gcc/include/QtWidgets/qframe.h \
@@ -1651,6 +1671,93 @@ prim.o: ../Maps/prim.cpp ../Maps/prim.h \
 		../../Qt5.5.0/5.5/gcc/include/QtCore/qpoint.h \
 		../Maps/tablad.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o prim.o ../Maps/prim.cpp
+
+kruskal.o: ../Maps/kruskal.cpp ../Maps/kruskal.h \
+		../Maps/nodo.h \
+		../Maps/arista.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/QString \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qstring.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qchar.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qglobal.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qconfig.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qfeatures.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qsystemdetection.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qprocessordetection.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qcompilerdetection.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qtypeinfo.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qtypetraits.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qsysinfo.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qlogging.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qflags.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qbasicatomic.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_bootstrap.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qgenericatomic.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_cxx11.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_gcc.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_msvc.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_armv7.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_armv6.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_armv5.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_ia64.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_mips.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_x86.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_unix.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qglobalstatic.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qmutex.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qnumeric.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qbytearray.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qrefcount.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qnamespace.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qarraydata.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qstringbuilder.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/QPoint \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qpoint.h \
+		../Maps/uniones.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o kruskal.o ../Maps/kruskal.cpp
+
+uniones.o: ../Maps/uniones.cpp ../Maps/uniones.h \
+		../Maps/nodo.h \
+		../Maps/arista.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/QString \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qstring.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qchar.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qglobal.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qconfig.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qfeatures.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qsystemdetection.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qprocessordetection.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qcompilerdetection.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qtypeinfo.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qtypetraits.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qsysinfo.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qlogging.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qflags.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qbasicatomic.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_bootstrap.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qgenericatomic.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_cxx11.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_gcc.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_msvc.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_armv7.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_armv6.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_armv5.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_ia64.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_mips.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_x86.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qatomic_unix.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qglobalstatic.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qmutex.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qnumeric.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qbytearray.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qrefcount.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qnamespace.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qarraydata.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qstringbuilder.h \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/QPoint \
+		../../Qt5.5.0/5.5/gcc/include/QtCore/qpoint.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o uniones.o ../Maps/uniones.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

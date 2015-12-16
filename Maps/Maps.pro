@@ -20,7 +20,9 @@ SOURCES += main.cpp\
     dijkstra.cpp \
     floyd.cpp \
     label.cpp \
-    prim.cpp
+    prim.cpp \
+    kruskal.cpp \
+    uniones.cpp
 
 HEADERS  += mainwindow.h \
     nodo.h \
@@ -29,7 +31,9 @@ HEADERS  += mainwindow.h \
     dijkstra.h \
     floyd.h \
     label.h \
-    prim.h
+    prim.h \
+    kruskal.h \
+    uniones.h
 
 FORMS    += mainwindow.ui \
     label.ui

@@ -5,6 +5,7 @@
 #include "label.h"
 #include "floyd.h"
 #include "prim.h"
+#include "kruskal.h"
 #include <QLabel>
 #include <QPainter>
 #include <QGraphicsScene>
@@ -27,6 +28,7 @@ public:
     QTableView *tabla;
     Nodo* ciudades[54];
     Prim* prim;
+    Kruskal* kruskal;
     Dijkstra *dijkstra;
     QPainter *painter;
     QImage *tmp;
@@ -43,6 +45,8 @@ private slots:
     void on_botonFloyd_clicked();
 
     void on_toolButton_clicked();
+
+    void on_botonKruskal_clicked();
 
 private:
     Ui::MainWindow *ui;

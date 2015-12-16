@@ -6,6 +6,9 @@ Label::Label(QWidget *parent) :
     ui(new Ui::Label)
 {
     ui->setupUi(this);
+    lay=new QVBoxLayout(this);
+    lay->addWidget(ui->hola);
+    ui->scrollAreaWidgetContents->setLayout(lay);
 }
 
 Label::~Label()
@@ -16,4 +19,5 @@ Label::~Label()
 void Label::print(QString text)
 {
     ui->hola->setText(text);
+    ui->scrollAreaWidgetContents->setLayout(lay);
 }

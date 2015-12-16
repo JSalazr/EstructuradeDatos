@@ -39,6 +39,7 @@ public:
     QLineEdit *DCiudadDestino;
     QToolButton *toolButton;
     QLineEdit *PrimEdit;
+    QLabel *label_3;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -85,6 +86,9 @@ public:
         PrimEdit = new QLineEdit(centralWidget);
         PrimEdit->setObjectName(QStringLiteral("PrimEdit"));
         PrimEdit->setGeometry(QRect(510, 0, 113, 26));
+        label_3 = new QLabel(centralWidget);
+        label_3->setObjectName(QStringLiteral("label_3"));
+        label_3->setGeometry(QRect(1060, 90, 261, 121));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -112,6 +116,7 @@ public:
         botonKruskal->setText(QApplication::translate("MainWindow", "Kruskal", 0));
         label_2->setText(QString());
         toolButton->setText(QApplication::translate("MainWindow", "Reset", 0));
+        label_3->setText(QString());
     } // retranslateUi
 
 };

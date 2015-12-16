@@ -15,7 +15,7 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
-#include <QtWidgets/QTableView>
+#include <QtWidgets/QScrollArea>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -24,19 +24,25 @@ class Ui_Label
 {
 public:
     QLabel *hola;
-    QTableView *tableView;
+    QScrollArea *hola1;
+    QWidget *scrollAreaWidgetContents;
 
     void setupUi(QWidget *Label)
     {
         if (Label->objectName().isEmpty())
             Label->setObjectName(QStringLiteral("Label"));
-        Label->resize(1475, 646);
+        Label->resize(731, 492);
         hola = new QLabel(Label);
         hola->setObjectName(QStringLiteral("hola"));
         hola->setGeometry(QRect(70, 30, 1381, 481));
-        tableView = new QTableView(Label);
-        tableView->setObjectName(QStringLiteral("tableView"));
-        tableView->setGeometry(QRect(80, 40, 256, 192));
+        hola1 = new QScrollArea(Label);
+        hola1->setObjectName(QStringLiteral("hola1"));
+        hola1->setGeometry(QRect(20, 20, 681, 461));
+        hola1->setWidgetResizable(true);
+        scrollAreaWidgetContents = new QWidget();
+        scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 679, 459));
+        hola1->setWidget(scrollAreaWidgetContents);
 
         retranslateUi(Label);
 

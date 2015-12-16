@@ -409,6 +409,7 @@ MainWindow::MainWindow(QWidget *parent) :
     dijkstra=new Dijkstra(ciudades);
     floyd=new Floyd(ciudades);
     prim=new Prim(ciudades);
+    kruskal=new Kruskal(ciudades);
     pintarLineas();
 
 }
@@ -421,6 +422,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_botonDijkstra_clicked()
 {
+    dijkstra=new Dijkstra(ciudades);
+    double distancia=0;
     int num1=dijkstra->buscar(ui->DCiudad->text());
     cout<<ui->DCiudad->text().toUtf8().constData();
     cout<<num1<<endl;
@@ -428,11 +431,12 @@ void MainWindow::on_botonDijkstra_clicked()
         dijkstra->resolverD(num1);
     QString text="Ciudad\tCosto\tPath \n";
     for(int cont=0; cont<54; cont++){
-        text=text+dijkstra->ciudadesD[cont]->nodo->ciudad+"\t"+QString::number(dijkstra->ciudadesD[cont]->costo)+
+        text=text+QString::number(prim->ciudadesD[cont]->nodo->valor)+"\t"+QString::number(dijkstra->ciudadesD[cont]->costo)+
                 "\t"+QString::number(dijkstra->ciudadesD[cont]->path)+"\n";
     }
 
     int num2=dijkstra->buscar(ui->DCiudadDestino->text());
+    distancia=dijkstra->ciudadesD[num2]->costo;
     QPen penHLines(QColor("#00ff00"), 1, Qt::SolidLine, Qt::FlatCap, Qt::RoundJoin);
     painter->setPen(penHLines);
     while(num2!=num1){
@@ -441,7 +445,9 @@ void MainWindow::on_botonDijkstra_clicked()
                 dijkstra->ciudadesD[dijkstra->ciudadesD[num2]->path]->nodo->punto.y());
         num2=dijkstra->ciudadesD[num2]->path;
     }
+    QString dist="Distancia: "+QString::number(distancia)+" km \n Tiempo: "+QString::number(distancia/80)+" horas";
     ui->label->setPixmap(QPixmap::fromImage(*tmp));
+    ui->label_3->setText(dist);
     label->show();
     label->print(text);
 
@@ -449,6 +455,7 @@ void MainWindow::on_botonDijkstra_clicked()
 
 void MainWindow::on_botonPrim_clicked()
 {
+    prim=new Prim(ciudades);
     int num1=prim->buscar(ui->PrimEdit->text());
     cout<<ui->PrimEdit->text().toUtf8().constData();
     cout<<num1<<endl;
@@ -456,7 +463,7 @@ void MainWindow::on_botonPrim_clicked()
         prim->resolverD(num1);
     QString text="Ciudad\tCosto\tPath \n";
     for(int cont=0; cont<54; cont++){
-        text=text+prim->ciudadesD[cont]->nodo->ciudad+"\t"+QString::number(prim->ciudadesD[cont]->costo)+
+        text=text+QString::number(prim->ciudadesD[cont]->nodo->valor)+"\t"+QString::number(prim->ciudadesD[cont]->costo)+
                 "\t"+QString::number(prim->ciudadesD[cont]->path)+"\n";
     }
 
@@ -464,9 +471,9 @@ void MainWindow::on_botonPrim_clicked()
     painter->setPen(penHLines);
     for(int num2=0; num2<54; num2++){
         if(prim->ciudadesD[num2]->path!=-1)
-        painter->drawLine(prim->ciudadesD[num2]->nodo->punto.x(), prim->ciudadesD[num2]->nodo->punto.y(),
-                          prim->ciudadesD[prim->ciudadesD[num2]->path]->nodo->punto.x(),
-                prim->ciudadesD[prim->ciudadesD[num2]->path]->nodo->punto.y());
+        painter->drawLine(dijkstra->ciudadesD[num2]->nodo->punto.x(), dijkstra->ciudadesD[num2]->nodo->punto.y(),
+                          dijkstra->ciudadesD[dijkstra->ciudadesD[num2]->path]->nodo->punto.x(),
+                dijkstra->ciudadesD[dijkstra->ciudadesD[num2]->path]->nodo->punto.y());
     }
     ui->label->setPixmap(QPixmap::fromImage(*tmp));
     label->show();
@@ -475,16 +482,22 @@ void MainWindow::on_botonPrim_clicked()
 
 void MainWindow::on_botonFloyd_clicked()
 {
+    floyd=new Floyd(ciudades);
     floyd->resolverF();
-    QString text="";
+    QString text="Costos \n";
     for(int cont=0; cont<54; cont++){
-        text=text+ciudades[cont]->ciudad+"\t";
-    }
-    text=text+"\n";
-    for(int cont=0; cont<54; cont++){
-        text=text+ciudades[cont]->ciudad+"\t";
+        text=text+QString::number(ciudades[cont]->valor)+"\t";
         for(int cont1=0; cont1<54; cont1++){
             text=text+QString::number(floyd->tablaFC[cont][cont1])+"\t";
+        }
+        text=text+"\n";
+    }
+    text=text+"\n Path \n";
+
+    for(int cont=0; cont<54; cont++){
+        text=text+QString::number(ciudades[cont]->valor)+"\t";
+        for(int cont1=0; cont1<54; cont1++){
+            text=text+QString::number(floyd->tablaFP[cont][cont1])+"\t";
         }
         text=text+"\n";
     }
@@ -495,7 +508,28 @@ void MainWindow::on_botonFloyd_clicked()
 void MainWindow::on_toolButton_clicked()
 {
         pintarLineas();
-        dijkstra=new Dijkstra(ciudades);
-        prim=new Prim(ciudades);
-        floyd=new Floyd(ciudades);
+        ui->label_3->setText("");
+}
+
+void MainWindow::on_botonKruskal_clicked()
+{
+    kruskal=new Kruskal(ciudades);
+    kruskal->resolver();
+
+    QString text="";
+    for(int cont=0; cont<54; cont++){
+        text=text+QString::number(kruskal->tablaK[cont][0])+"\t"+QString::number(kruskal->tablaK[cont][1])+"\n";
+    }
+
+    QPen penHLines(QColor("#00ff00"), 1, Qt::SolidLine, Qt::FlatCap, Qt::RoundJoin);
+    painter->setPen(penHLines);
+    for(int num2=0; num2<54; num2++){
+        if(prim->ciudadesD[num2]->path!=-1)
+        painter->drawLine(dijkstra->ciudadesD[num2]->nodo->punto.x(), dijkstra->ciudadesD[num2]->nodo->punto.y(),
+                          dijkstra->ciudadesD[dijkstra->ciudadesD[num2]->path]->nodo->punto.x(),
+                dijkstra->ciudadesD[dijkstra->ciudadesD[num2]->path]->nodo->punto.y());
+    }
+    ui->label->setPixmap(QPixmap::fromImage(*tmp));
+    label->show();
+    label->print(text);
 }
